@@ -57,19 +57,7 @@ namespace DisorderedOrdersMVC.Controllers
             var total = CalculateTotal(order);
 
             // process payment
-            IPaymentProcessor processor;
-            if (paymentType == "bitcoin")
-            {
-                processor = new BitcoinProcessor();
-            }
-            else if (paymentType == "paypal")
-            {
-                processor = new PayPalProcessor();
-            }
-            else
-            {
-                processor = new CreditCardProcessor();
-            }
+            IPaymentProcessor processor = PaymentProcessorCreator.CreateProcessor(paymentType);
 
             processor.ProcessPayment(total);
 
